@@ -1,0 +1,116 @@
+﻿/* GENERAL LAYOUT*/
+html, body {
+    background-color: #284C7F;
+    height: 100%;
+    color: #FCF8FE;
+}
+
+.brows-footer {
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+    color: #FCF8FE;
+    padding: 10px 0;
+}
+
+.brows-cover {
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+    padding-top: 70px;
+    padding-bottom: 50px;
+    vertical-align: central;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+/* COLORS */
+.site-wrap {
+    padding-top: 70px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.site-contents {
+    background-color: #7E98BC;
+    padding-top: 70px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #6A0888;
+ }
+
+.navbar-nav {
+    font-size: large;
+}
+
+/* LOGIN PAGE*/
+.login {
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+    padding-top: 70px;
+    padding-bottom: 50px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+/* JUMBOTRON*/
+.jumbotron {
+    background-color: #B0B6BF;
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* CAROUSEL */
+.carousel {
+  height: 100%;
+  margin-bottom: 60px;
+}
+
+.carousel-caption {
+  z-index: 10;
+}
+
+.carousel .item {
+  height: 100%;
+  background-color: #284C7F;
+}
+
+.carousel-inner > .item > img {
+  position:inherit;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 100%;
+}
+
+.browsit-logo {
+    background: url('~/Images/logo9-9.png') no-repeat center right; 
+    display: block; 
+    height:84px; 
+    width:585px;
+}
+
+.navbar-brand {
+    background-image: url(~/Images/logo9-9.png);
+}

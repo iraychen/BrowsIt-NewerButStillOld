@@ -1,0 +1,80 @@
+﻿@model BROWSit.Models.Report
+
+@{
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<h2>Edit</h2>
+@if (Model == null)
+{
+    
+}
+else
+{
+    using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Report</legend>
+
+            @Html.HiddenFor(model => model.ReportID)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Author)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Author)
+                @Html.ValidationMessageFor(model => model.Author)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Query)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Query)
+                @Html.ValidationMessageFor(model => model.Query)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CreationDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.CreationDate)
+                @Html.ValidationMessageFor(model => model.CreationDate)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ModificationDate)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ModificationDate)
+                @Html.ValidationMessageFor(model => model.ModificationDate)
+            </div>
+
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

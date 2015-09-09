@@ -1,0 +1,49 @@
+﻿<div class="site-contents">
+    <div class="jumbotron">
+        <h2>@ViewBag.Title.</h2>
+        <h3>@ViewBag.Message</h3>
+    </div>
+
+    @using (Html.BeginForm("Create", "Export")) {
+        <fieldset>
+            <legend>Report</legend>
+
+            @if (ViewBag.Type == "Excel")
+            {
+                <div class="editor-label">
+                    @Html.Label("Excel file name")
+                </div>
+                <div class="editor-field">
+                    @Html.Editor("fileName")
+                    @Html.ValidationMessage("test")
+                </div>
+                <div class="editor-label">
+                    @Html.Label("Table Name")
+                </div>
+                <div class="editor-field">
+                    @Html.Editor("tableName")
+                    @Html.ValidationMessage("test")
+                </div>
+                <div class="editor-label">
+                    @Html.Label("Worksheet Name")
+                </div>
+                <div class="editor-field">
+                    @Html.Editor("workSheetName")
+                    @Html.ValidationMessage("test")
+                </div>
+            }
+            <div class="editor-label">
+                @Html.Label("SQL Query")
+            </div>
+            <div class="editor-field">
+                @Html.Editor("rawSql")
+                @Html.ValidationMessage("test")
+            </div>
+        
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+</div>

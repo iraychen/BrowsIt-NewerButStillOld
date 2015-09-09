@@ -1,0 +1,71 @@
+@model IEnumerable<BROWSit.Models.Report>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            CreationDate
+        </th>
+        <th>
+            ModificationDate
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Query
+        </th>
+        <th>
+            getDefaultColumns
+        </th>
+        <th>
+            getAllColumns
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReportID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReportID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReportID })
+        </td>
+        <td>
+			@String.Format("{0:g}", item.CreationDate)
+        </td>
+        <td>
+			@String.Format("{0:g}", item.ModificationDate)
+        </td>
+        <td>
+			@item.Title
+        </td>
+        <td>
+			@item.Author
+        </td>
+        <td>
+			@item.Query
+        </td>
+        <td>
+			@(item.getDefaultColumns == null ? "None" : item.getDefaultColumns.Count.ToString())
+        </td>
+        <td>
+			@(item.getAllColumns == null ? "None" : item.getAllColumns.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+
