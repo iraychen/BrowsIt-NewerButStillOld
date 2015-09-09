@@ -1,0 +1,63 @@
+﻿@model BROWSit.Models.ReportingModel
+
+<div class="site-contents">
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+
+    <h3>Reports List</h3>
+    @if (!String.IsNullOrEmpty(Model.error))
+    {
+        @Model.error
+    }
+    @if (Model.table != null)
+    {
+        <div class="display">
+            <table class="table table-striped table-bordered table-hover">
+                @if (Model.table.Rows.Count == 0)
+                {
+                    <tr><td colspan="5">-- No reports found --</td></tr>
+                }
+                else
+                {
+                    <tr>
+                        @foreach (System.Data.DataColumn c in Model.table.Columns)
+                        {
+                            <th style="white-space:nowrap">
+                                @c.Caption
+                                @if (Model.sortDown == c.Caption)
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button> 
+                                }
+                                @if (Model.sortUp == c.Caption)
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button> 
+                                }
+                            </th>
+                        }
+                    </tr>
+                    foreach (System.Data.DataRow r in Model.table.Rows)
+                    {
+                        <tr>
+                            @foreach (var v in r.ItemArray)
+                            {
+                                <td>@v.ToString()</td>
+                            }
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    
+        <hr />
+    }
+</div>

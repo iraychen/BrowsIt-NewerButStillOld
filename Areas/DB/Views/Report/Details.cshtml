@@ -1,0 +1,38 @@
+@model BROWSit.Models.Report
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Report</legend>
+
+    <div class="display-label">CreationDate</div>
+    <div class="display-field">@String.Format("{0:g}", Model.CreationDate)</div>
+
+    <div class="display-label">ModificationDate</div>
+    <div class="display-field">@String.Format("{0:g}", Model.ModificationDate)</div>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">@Model.Title</div>
+
+    <div class="display-label">Author</div>
+    <div class="display-field">@Model.Author</div>
+
+    <div class="display-label">Query</div>
+    <div class="display-field">@Model.Query</div>
+
+    <div class="display-label">getDefaultColumns</div>
+    <div class="display-field">@(Model.getDefaultColumns == null ? "None" : Model.getDefaultColumns.Count.ToString())</div>
+
+    <div class="display-label">getAllColumns</div>
+    <div class="display-field">@(Model.getAllColumns == null ? "None" : Model.getAllColumns.Count.ToString())</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ReportID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

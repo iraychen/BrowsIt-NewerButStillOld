@@ -1,0 +1,64 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <!-- BOOTSTRAP -->
+        @Styles.Render("~/css")
+        @Scripts.Render("~/js")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jqueryval")
+        <link href="browsit.css" rel="stylesheet"/>
+    </head>
+    <body>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsable-area-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink(" ", "Index", "Home", new {area = "" }, new { @style = "background: url('" + Url.Content("~/Images/logo9-9.png") + "') no-repeat center right; display:block; height:50px; width:300px;" })
+                </div>
+                <div class="collapse navbar-collapse" id="collapsable-area-1">
+                    <ul class="nav navbar-nav navbar-left"> 
+                        <!-- Shared -->
+                        <li><span class="icon-bar"></span></li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li> 
+                        <li>@Html.ActionLink("Documentation", "Documentation", "Home", new { area = "" }, null)</li> 
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Upload", "Index", "Upload", new { area = "Upload" }, null)</li>
+                        <li>@Html.ActionLink("Data", "Index", "Data", new { area = "Data" }, null)</li>
+                        <li>@Html.ActionLink("Reports", "Index", "Reports", new { area = "Reporting" }, null)</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right"> 
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DB<span class="caret"></span></a> 
+                            <ul class="dropdown-menu"> 
+                                <li class="nav-header">BROWS DB</li> 
+                                <li>@Html.ActionLink("Rqmt", "Index", "Requirement", new { area = "DB" }, null)</li> 
+                                <li>@Html.ActionLink("Prefix", "Index", "Prefix", new { area = "DB" }, null)</li> 
+                                <li>@Html.ActionLink("Platform", "Index", "Platform", new { area = "DB" }, null)</li> 
+                                <li>@Html.ActionLink("Target", "Index", "Target", new { area = "DB" }, null)</li> 
+                                <li>@Html.ActionLink("Test", "Index", "Test", new { area = "DB" }, null)</li>  
+                                <li class="divider"></li> 
+                                <li class="nav-header">BROWSit DB</li> 
+                                <li>@Html.ActionLink("Report", "Index", "Report", new { area = "DB" }, null)</li> 
+                            </ul> 
+                        </li>
+                        <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, null)</li>
+                    </ul> 
+                </div>
+            </nav>
+            @RenderSection("intro", required: false)
+            @RenderBody()
+            <footer class="brows-footer">
+                <p>&copy; @DateTime.Now.Year - Tektronix</p>
+            </footer>  
+    </body>
+</html>
