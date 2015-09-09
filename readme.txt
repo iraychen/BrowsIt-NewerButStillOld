@@ -1,18 +1,3 @@
-# BrowsIt
-Repository for development/maintenance of internal BrowsIt tool
-
-Because of the absurdity of the lazy implementation of interacting with repositories online (thanks to the insistence of the overuse of a command line interface by Amish programmers), all images are instead included in the repository as Issues.
-
-
-
-
-
-
-
-
-
-BUILT IN README (From Visual Studio)
-
 ﻿To use this template with Windows Azure authentication, refer to http://go.microsoft.com/fwlink/?LinkID=267940.
 
 Otherwise, to use this template with Windows authentication, refer to the instructions below:
