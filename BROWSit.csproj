@@ -159,42 +159,39 @@
     <Compile Include="Areas\Data\Controllers\DataController.cs" />
     <Compile Include="Areas\Data\DataAreaRegistration.cs" />
     <Compile Include="Areas\DB\DBAreaRegistration.cs" />
+    <Compile Include="Areas\DB\Models\Documents\TestScript.cs" />
+    <Compile Include="Areas\DB\Models\Documents\PRS.cs" />
+    <Compile Include="Areas\DB\Models\Documents\SRS.cs" />
+    <Compile Include="Areas\DB\Models\Trace\Feature.cs" />
+    <Compile Include="Areas\DB\Models\UserAuthentication\Role.cs" />
+    <Compile Include="Areas\DB\Models\UserAuthentication\User.cs" />
     <Compile Include="Areas\Export\Controllers\ExportController.cs" />
     <Compile Include="Areas\Export\ExportAreaRegistration.cs" />
+    <Compile Include="Areas\Information\Controllers\DocumentationController.cs" />
+    <Compile Include="Areas\Information\InformationAreaRegistration.cs" />
     <Compile Include="Areas\Reporting\ReportingAreaRegistration.cs" />
     <Compile Include="Areas\Reporting\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Upload\Controllers\UploadController.cs" />
     <Compile Include="Areas\Upload\Models\UploadModel.cs" />
     <Compile Include="Areas\Upload\UploadAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Areas\DB\Controllers\PlatformController.cs" />
-    <Compile Include="Areas\DB\Controllers\PrefixController.cs" />
-    <Compile Include="Areas\DB\Controllers\RequirementController.cs" />
-    <Compile Include="Areas\DB\Controllers\TargetController.cs" />
-    <Compile Include="Areas\DB\Controllers\TestController.cs" />
-    <Compile Include="Areas\DB\Controllers\ReportController.cs" />
     <Compile Include="DAL\BROWSitContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\DataTableHelper.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Helpers\StatsHelper.cs" />
-    <Compile Include="Migrations\201509020101102_initial.cs" />
-    <Compile Include="Migrations\201509020101102_initial.Designer.cs">
-      <DependentUpon>201509020101102_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Areas\DB\Models\Base\AbstractModel.cs" />
     <Compile Include="Areas\Data\Models\DataModel.cs" />
     <Compile Include="Areas\Reporting\Models\ReportingModel.cs" />
-    <Compile Include="Areas\DB\Models\Report.cs" />
-    <Compile Include="Areas\DB\Models\Platform.cs" />
-    <Compile Include="Areas\DB\Models\Prefix.cs" />
-    <Compile Include="Areas\DB\Models\Requirement.cs" />
-    <Compile Include="Areas\DB\Models\Target.cs" />
-    <Compile Include="Areas\DB\Models\Test.cs" />
+    <Compile Include="Areas\DB\Models\Documents\Report.cs" />
+    <Compile Include="Areas\DB\Models\Trace\Platform.cs" />
+    <Compile Include="Areas\DB\Models\Trace\Requirement.cs" />
+    <Compile Include="Areas\DB\Models\Trace\Target.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +275,11 @@
     <Content Include="Areas\Upload\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Upload\Views\Upload\Index.cshtml" />
     <Content Include="Areas\Upload\Views\Upload\Create.cshtml" />
+    <Content Include="Areas\Information\Views\Web.config" />
+    <Content Include="Areas\Information\Views\Documentation\About.cshtml" />
+    <Content Include="Areas\Information\Views\Documentation\Contact.cshtml" />
+    <Content Include="Areas\Information\Views\Documentation\Index.cshtml" />
+    <Content Include="Areas\Information\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Images\Logo9-9.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -320,14 +322,11 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="packages.config" />
     <None Include="readme.txt" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Documentation.cshtml" />
     <Content Include="Areas\DB\Views\Requirement\Index.cshtml" />
     <Content Include="Areas\DB\Views\Requirement\Details.cshtml" />
     <Content Include="Areas\DB\Views\Requirement\Create.cshtml" />
@@ -365,21 +364,20 @@
     <Content Include="Areas\DB\Views\Report\_CreateOrEdit.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Data\Views\Shared\" />
+    <Folder Include="Areas\DB\Controllers\" />
     <Folder Include="Areas\DB\Views\Shared\" />
     <Folder Include="Areas\Export\Models\" />
     <Folder Include="Areas\Export\Views\Shared\" />
+    <Folder Include="Areas\Information\Models\" />
+    <Folder Include="Areas\Information\Views\Shared\" />
     <Folder Include="Areas\Reporting\Views\Shared\" />
     <Folder Include="Areas\Upload\Views\Shared\" />
     <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201509020101102_initial.resx">
-      <DependentUpon>201509020101102_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

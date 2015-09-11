@@ -12,12 +12,14 @@ namespace BROWSit.Models
         public bool fileCheck;
         public bool typeCheck;
         public string fileName;
+        public string typeName;
 
         public UploadModel()
         {
             fileCheck = false;
             typeCheck = false;
             fileName = "";
+            typeName = "";
         }
     }
 }

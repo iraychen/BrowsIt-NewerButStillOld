@@ -2,66 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BROWSit.Models
 {
-    // ENUM EXAMPLE
-    /*public enum Grade
+    public class PRS : BaseEntityWithDate
     {
-        A, B, C, D, F
-    }*/
-
-    /*public class Enrollment
-    {
-        public int EnrollmentID { get; set; }
-        public int CourseID { get; set; }
-        public int StudentID { get; set; }
-        public Grade? Grade { get; set; }
-    }*/
-
-    public class Test : BaseEntity
-    {
-        /***************
-          Primary Key
-        ***************/
-
-        public int TestID { get; set; }
-
         /*********************
           Strings & Integers
         *********************/
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Path")]
+        public string Title { get; set; }
+        public string Author { get; set; }
         public string Path { get; set; }
 
         /***********************
           Foreign Keys & Joins
         ***********************/
-
-        public virtual ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
 
         /*******************
           Helper Functions
         *******************/
-
         public static List<string> getDefaultColumns
         {
             get
             {
                 List<string> columnList = new List<string>
                     {
-                        "Name",
-                        "Path"
+                        "Title",
+                        "Author",
+                        "Query",
+                        "CreationDate",
+                        "ModificationDate"
                     };
                 return columnList;
             }
@@ -73,8 +49,12 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
-                        "Name",
-                        "Path"
+                        "ID",
+                        "Title",
+                        "Author",
+                        "Query",
+                        "CreationDate",
+                        "ModificationDate"
                     };
                 return columnList;
             }

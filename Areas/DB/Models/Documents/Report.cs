@@ -2,39 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BROWSit.Models
 {
-    public class Prefix : BaseEntity
+    public class Report : BaseEntityWithDate
     {
-        /***************
-          Primary Key
-        ***************/
-
-        public int PrefixID { get; set; }
-
         /*********************
           Strings & Integers
         *********************/
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Document")]
-        public string Document { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Query { get; set; }
 
         /***********************
           Foreign Keys & Joins
         ***********************/
-
-        public virtual ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
 
         /*******************
           Helper Functions
@@ -45,8 +33,11 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
-                        "Name",
-                        "Document"
+                        "Title",
+                        "Author",
+                        "Query",
+                        "CreationDate",
+                        "ModificationDate"
                     };
                 return columnList;
             }
@@ -58,8 +49,12 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
-                        "Name",
-                        "Document"
+                        "ID",
+                        "Title",
+                        "Author",
+                        "Query",
+                        "CreationDate",
+                        "ModificationDate"
                     };
                 return columnList;
             }

@@ -32,14 +32,12 @@ namespace BROWSit.Areas.Upload.Controllers
             HttpPostedFileBase file = Request.Files["doc-file"];
             if (file != null && file.ContentLength > 0)
             {
-                model.fileCheck = true;
+                model.fileName = file.FileName;
 
                 // Verify the file type
-                if (Path.GetExtension(file.FileName) == ".docx")
+                model.typeName = Path.GetExtension(file.FileName);
+                if (model.typeName == ".docx")
                 {
-                    model.typeCheck = true;
-                    model.fileName = file.FileName;
-
                     //DocX doc = DocX.Load("filename");
                     //string contents = doc.ToString();
                 }

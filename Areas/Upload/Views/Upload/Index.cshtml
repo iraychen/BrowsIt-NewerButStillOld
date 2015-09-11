@@ -1,66 +1,60 @@
 ﻿@model BROWSit.Models.UploadModel
 
-<div class="site-contents">
-    <div class="jumbotron">
-        <h2>@ViewBag.Title.</h2>
-        <h3>@ViewBag.Message</h3>
-    </div>
-
-    @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        Requirements can be added by uploading a word document.
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="btn btn-primary" for="doc-file">
-                        <input id="doc-file" type="file" name="doc-file" style="display:none;" onchange="this.form.submit()">
-                        Browse local files...
-                    </label>
-                </div>
-            </div>
-            @if (Model.fileCheck == true)
-            {
-                <hr />
-                if (Model.typeCheck == true)
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>
-                                The following information was gathered from the provided file.
-                                Please verify that it is correct.
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="editor-label">
-                                @Html.Label("File name"): @Model.fileName
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>
-                                WRONG FILE TYPE! Please only upload .docx files
-                            </h3>
-                        </div>
-                    </div>
-                }
-            }
-            <div class="row">
-                <div class="col-md-12">
-                    <input type="submit" value="Create" />
-                </div>
+@using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    Requirements can be added by uploading a word document.
+                </p>
             </div>
         </div>
-    }
-</div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="btn btn-primary" for="doc-file">
+                    <input id="doc-file" type="file" name="doc-file" style="display:none;" onchange="this.form.submit()">
+                    Browse local files...
+                </label>
+            </div>
+        </div>
+        @if (!String.IsNullOrEmpty(Model.fileName))
+        {
+            <hr />
+            if (Model.typeName == ".docx")
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            The following information was gathered from the provided file.
+                            Please verify that it is correct.
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="editor-label">
+                            <p>@Html.Label("File name"): @Model.fileName</p>
+                            <p>@Html.Label("Author name"): @Model.fileName</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            WRONG FILE TYPE! @Model.typeName is not accepted. Please only upload .docx files
+                        </h3>
+                    </div>
+                </div>
+            }
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" value="Create" />
+            </div>
+        </div>
+    </div>
+}

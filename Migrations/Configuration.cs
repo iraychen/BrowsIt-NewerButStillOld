@@ -1,20 +1,22 @@
 namespace BROWSit.Migrations
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using BROWSit.Models;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.SqlServer;
     using System.Data.Entity.Migrations.Model;
+    using BROWSit.Helpers;
 
     internal sealed class Configuration : DbMigrationsConfiguration<BROWSit.DAL.BROWSitContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             SetSqlGenerator("System.Data.SqlClient", new CustomSqlServerMigrationSqlGenerator());
         }
 
@@ -56,173 +58,78 @@ namespace BROWSit.Migrations
 
         protected override void Seed(BROWSit.DAL.BROWSitContext context)
         {
-            var prefixes = new List<Prefix>
-            {
-                new Prefix
-                {
-                    Name = "TestPrefix01",
-                    Document = "TestDoc01"
-                },
-                new Prefix
-                {
-                    Name = "TestPrefix02",
-                    Document = "TestDoc02"
-                },
-                new Prefix
-                {
-                    Name = "TestPrefix03",
-                    Document = "TestDoc03"
-                },
-                new Prefix
-                {
-                    Name = "TestPrefix04",
-                    Document = "TestDoc04"
-                },
-                new Prefix
-                {
-                    Name = "TestPrefix05",
-                    Document = "TestDoc05"
-                }
-            };
-            prefixes.ForEach(s => context.Prefixes.AddOrUpdate(p => p.Name, s));
-            context.SaveChanges();
+            // TRACE
+            context.Requirements.AddOrUpdate(
+                r => r.Title,
+                new Requirement() { Title = "TestRequirement01", Author = "TestAuthor01", Rationale = "TestRationale01" },
+                new Requirement() { Title = "TestRequirement02", Author = "TestAuthor02", Rationale = "TestRationale02" },
+                new Requirement() { Title = "TestRequirement03", Author = "TestAuthor03", Rationale = "TestRationale03" },
+                new Requirement() { Title = "TestRequirement04", Author = "TestAuthor04", Rationale = "TestRationale04" },
+                new Requirement() { Title = "TestRequirement05", Author = "TestAuthor05", Rationale = "TestRationale05" }
+            );
 
-            var targets = new List<Target>
-            {
-                new Target
-                {
-                    Name = "TestTarget01"
-                },
-                new Target
-                {
-                    Name = "TestTarget02"
-                },
-                new Target
-                {
-                    Name = "TestTarget03"
-                },
-                new Target
-                {
-                    Name = "TestTarget04"
-                },
-                new Target
-                {
-                    Name = "TestTarget05"
-                }
-            };
-            targets.ForEach(s => context.Targets.AddOrUpdate(p => p.Name, s));
-            context.SaveChanges();
+            context.Platforms.AddOrUpdate(
+                p => p.Name,
+                new Platform() { Name = "TestPlatform01" },
+                new Platform() { Name = "TestPlatform02" },
+                new Platform() { Name = "TestPlatform03" }
+            );
 
-            var platforms = new List<Platform>
-            {
-                new Platform
-                {
-                    Name = "TestPlatform01"
-                },
-                new Platform
-                {
-                    Name = "TestPlatform02"
-                },
-                new Platform
-                {
-                    Name = "TestPlatform03"
-                }
-            };
-            platforms.ForEach(s => context.Platforms.AddOrUpdate(p => p.Name, s));
-            context.SaveChanges();
+            context.Targets.AddOrUpdate(
+                t => t.Name,
+                new Target() { Name = "TestTarget01" },
+                new Target() { Name = "TestTarget02" },
+                new Target() { Name = "TestTarget03" }
+            );
 
-            var tests = new List<Test>
-            {
-                new Test
-                {
-                    Name = "TestName01",
-                    Path = "TestPath01"
-                },
-                new Test
-                {
-                    Name = "TestName02",
-                    Path = "TestPath02"
-                },
-                new Test
-                {
-                    Name = "TestName03",
-                    Path = "TestPath03"
-                }
-            };
-            tests.ForEach(s => context.Tests.AddOrUpdate(p => p.Name, s));
-            context.SaveChanges();
+            context.Features.AddOrUpdate(
+                f => f.Name,
+                new Feature() { Name = "TestFeature01" },
+                new Feature() { Name = "TestFeature02" },
+                new Feature() { Name = "TestFeature03" }
+            );
 
-            var requirements = new List<Requirement>
-            {
-                new Requirement 
-                {   
-                    Title = "TestRequirement01", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                },
-                new Requirement 
-                {   
-                    Title = "TestRequirement02", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                },
-                new Requirement 
-                {   
-                    Title = "TestRequirement03", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                },
-                new Requirement 
-                {   
-                    Title = "TestRequirement04", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                },
-                new Requirement 
-                {   
-                    Title = "TestRequirement05", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                },
-                new Requirement 
-                {   
-                    Title = "TestRequirement06", 
-                    Author = "AutomaticSeed",
-                    Rationale = "Because",
-                    PrefixID = prefixes.Single(s => s.Name == "TestPrefix01").PrefixID,
-                    TargetID = targets.Single(s => s.Name == "TestTarget01").TargetID
-                }
-            };
-            requirements.ForEach(r => context.Requirements.AddOrUpdate(p => p.Title, r));
-            context.SaveChanges();
+            // USERAUTHENTICATION
+            context.Roles.AddOrUpdate(
+                r => r.Name,
+                new Role() { Name = "TestRole01" },
+                new Role() { Name = "TestRole02" }
+            );
 
-            var reports = new List<Report>
-            {
-                new Report
-                {
-                    Title = "TestReport01", 
-                    Author = "AutomaticSeed",
-                    Query = "Because",
-                },
-                new Report
-                {
-                    Title = "TestReport02",
-                    Author = "AutomaticSeed",
-                    Query = "Because",
-                }
-            };
-            reports.ForEach(s => context.Reports.AddOrUpdate(p => p.Title, s));
-            context.SaveChanges();
+            string salt = null;
+            LoginHelper.PasswordManager pm = new LoginHelper.PasswordManager();
+            string hash = pm.generatePasswordHash("password", out salt);
+            context.Users.AddOrUpdate(
+                u => u.Username,
+                new User() { Username = "TestUser01", Hash = hash, Salt = salt },
+                new User() { Username = "TestUser02", Hash = hash, Salt = salt }
+            );
+
+            // DOCUMENTS
+            context.Reports.AddOrUpdate(
+                r => r.Title,
+                new Report() { Title = "TestReport01", Author = "Seed", Query = "SELECT * FROM REQUIREMENTS" },
+                new Report() { Title = "TestReport02", Author = "Seed", Query = "SELECT * FROM PLATFORMS" },
+                new Report() { Title = "TestReport03", Author = "Seed", Query = "SELECT * FROM NOTHING" }
+            );
+
+            context.SRS.AddOrUpdate(
+                s => s.Title,
+                new SRS() { Title = "TestSRS01", Author = "Seed", Path = "?" },
+                new SRS() { Title = "TestSRS02", Author = "Seed", Path = "?" }
+            );
+
+            context.PRS.AddOrUpdate(
+                r => r.Title,
+                new PRS() { Title = "TestPRS01", Author = "Seed", Path = "?" },
+                new PRS() { Title = "TestPRS02", Author = "Seed", Path = "?" }
+            );
+
+            context.TestScripts.AddOrUpdate(
+                t => t.Title,
+                new TestScript() { Title = "Test01", Author = "Seed", Path = "?" },
+                new TestScript() { Title = "Test02", Author = "Seed", Path = "?" }
+            );
         }
     }
 }

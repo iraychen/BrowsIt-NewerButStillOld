@@ -27,7 +27,7 @@ namespace BROWSit.Areas.Reporting.Controllers
 
             foreach (Report r in reportsList)
             {
-                model.idList.Add(r.ReportID);
+                model.idList.Add(r.ID);
             }
 
             model.table = DataTableHelper.listToTable<Report>(reportsList, Report.getDefaultColumns);

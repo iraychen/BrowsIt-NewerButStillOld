@@ -8,27 +8,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BROWSit.Models
 {
-    public class Target : BaseEntity
+    public class Platform : BaseEntity
     {
-        /***************
-          Primary Key
-        ***************/
-
-        public int TargetID { get; set; }
-
         /*********************
           Strings & Integers
         *********************/
-
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Name")]
         public string Name { get; set; }
 
         /***********************
           Foreign Keys & Joins
         ***********************/
-
         public virtual ICollection<Requirement> Requirements { get; set; }
 
         /*******************

@@ -58,10 +58,9 @@ namespace BROWSit.Models
 
             list.Add(new SelectListItem { Text = "--Select Table--", Value = "" });
             list.Add(new SelectListItem { Text = "Requirements", Value = "Requirements" });
-            list.Add(new SelectListItem { Text = "Prefixes", Value = "Prefixes" });
-            list.Add(new SelectListItem { Text = "Targets", Value = "Targets" });
             list.Add(new SelectListItem { Text = "Platforms", Value = "Platforms" });
-            list.Add(new SelectListItem { Text = "Tests", Value = "Tests" });
+            list.Add(new SelectListItem { Text = "Targets", Value = "Targets" });
+            list.Add(new SelectListItem { Text = "Features", Value = "Features" });
 
             return list;
         }

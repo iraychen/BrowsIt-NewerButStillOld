@@ -27,11 +27,10 @@
                 </div>
                 <div class="collapse navbar-collapse" id="collapsable-area-1">
                     <ul class="nav navbar-nav navbar-left"> 
-                        <!-- Shared -->
                         <li><span class="icon-bar"></span></li>
-                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li> 
-                        <li>@Html.ActionLink("Documentation", "Documentation", "Home", new { area = "" }, null)</li> 
-                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Documentation", "Index", "Documentation", new { area = "Information" }, null)</li> 
+                        <li>@Html.ActionLink("About", "About", "Documentation", new { area = "Information" }, null)</li> 
+                        <li>@Html.ActionLink("Contact", "Contact", "Documentation", new { area = "Information" }, null)</li>
                         <li>@Html.ActionLink("Upload", "Index", "Upload", new { area = "Upload" }, null)</li>
                         <li>@Html.ActionLink("Data", "Index", "Data", new { area = "Data" }, null)</li>
                         <li>@Html.ActionLink("Reports", "Index", "Reports", new { area = "Reporting" }, null)</li>
@@ -55,8 +54,13 @@
                     </ul> 
                 </div>
             </nav>
-            @RenderSection("intro", required: false)
-            @RenderBody()
+            <div class="site-contents">
+                <div class="jumbotron">
+                    <h2>@ViewBag.Title.</h2>
+                    <h3>@ViewBag.Message</h3>
+                </div>
+                @RenderBody()
+            </div>
             <footer class="brows-footer">
                 <p>&copy; @DateTime.Now.Year - Tektronix</p>
             </footer>  

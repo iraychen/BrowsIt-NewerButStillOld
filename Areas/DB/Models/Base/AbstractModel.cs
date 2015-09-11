@@ -9,8 +9,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BROWSit.Models
 {
-    public class BaseEntity
+    public class BaseEntityWithDate
     {
+        /***************
+          Primary Key
+        ***************/
+
+        public int ID { get; set; }
+
         /********
           Dates
         ********/
@@ -22,5 +28,14 @@ namespace BROWSit.Models
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ModificationDate { get; set; }
+    }
+
+    public class BaseEntity
+    {
+        /***************
+          Primary Key
+        ***************/
+
+        public int ID { get; set; }
     }
 }

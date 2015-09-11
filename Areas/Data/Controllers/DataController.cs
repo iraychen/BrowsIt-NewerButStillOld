@@ -53,31 +53,20 @@ namespace BROWSit.Areas.Data.Controllers
                         parameters.columns = DataTableHelper.columnsToDisplay(Requirement.getDefaultColumns, Requirement.getAllColumns, model.hiddenColumnList);
                         model.hiddenColumnList = DataTableHelper.columnsToHide(Requirement.getDefaultColumns, Requirement.getAllColumns, model.hiddenColumnList);
                         break;
-                    case "Prefixes":
+                    case "Platforms":
                         // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Prefix.getDefaultColumns, Prefix.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Prefix.getDefaultColumns, Prefix.getAllColumns, model.hiddenColumnList);
+                        parameters.columns = DataTableHelper.columnsToDisplay(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
+                        model.hiddenColumnList = DataTableHelper.columnsToHide(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
                         break;
                     case "Targets":
                         // Build list of display columns and list of hidden columns
                         parameters.columns = DataTableHelper.columnsToDisplay(Target.getDefaultColumns, Target.getAllColumns, model.hiddenColumnList);
                         model.hiddenColumnList = DataTableHelper.columnsToHide(Target.getDefaultColumns, Target.getAllColumns, model.hiddenColumnList);
                         break;
-                    case "Platforms":
+                    case "Features":
                         // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
-                        break;
-                    case "Tests":
-                        // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Test.getDefaultColumns, Test.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Test.getDefaultColumns, Test.getAllColumns, model.hiddenColumnList);
-
-                        // Old-fashioned SQL strings
-                        //model.rawSqlString = parameters.constructAndGetSqlString(true);
-                        //List<Test> testList = db.Tests.SqlQuery(parameters.sqlStatement).ToList();
-                        //model.rawSqlString = parameters.constructAndGetSqlString(false);
-                        //model.getStatisticsAndTable(DataTableHelper.listToTable<Test>(testList, parameters.columns));
+                        parameters.columns = DataTableHelper.columnsToDisplay(Feature.getDefaultColumns, Feature.getAllColumns, model.hiddenColumnList);
+                        model.hiddenColumnList = DataTableHelper.columnsToHide(Feature.getDefaultColumns, Feature.getAllColumns, model.hiddenColumnList);
                         break;
                     default:
                         break;
