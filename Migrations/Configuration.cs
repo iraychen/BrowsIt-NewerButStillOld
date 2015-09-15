@@ -96,13 +96,12 @@ namespace BROWSit.Migrations
                 new Role() { Name = "TestRole02" }
             );
 
-            string salt = null;
-            LoginHelper.PasswordManager pm = new LoginHelper.PasswordManager();
-            string hash = pm.generatePasswordHash("password", out salt);
+            LoginHelper.PasswordManager pm1 = new LoginHelper.PasswordManager("TestUser01", "password");
+            LoginHelper.PasswordManager pm2 = new LoginHelper.PasswordManager("TestUser02", "password2");
             context.Users.AddOrUpdate(
                 u => u.Username,
-                new User() { Username = "TestUser01", Hash = hash, Salt = salt },
-                new User() { Username = "TestUser02", Hash = hash, Salt = salt }
+                new User() { Username = pm1.username, Hash = pm1.hash.getHashString(), Salt = pm1.salt.getSaltString() },
+                new User() { Username = pm2.username, Hash = pm2.hash.getHashString(), Salt = pm2.salt.getSaltString() }
             );
 
             // DOCUMENTS

@@ -16,12 +16,13 @@ namespace BROWSit.Controllers
     public class HomeController : Controller
     {
         BROWSit.DAL.BROWSitContext db = new BROWSit.DAL.BROWSitContext();
-        LoginHelper.PasswordManager pm = new LoginHelper.PasswordManager();
 
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+
+            
 
             return View();
         }
@@ -40,14 +41,18 @@ namespace BROWSit.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Helpers.LoginHelper.IsValidLogin(user.Username, user.Hash))
+                User userMatch = db.Users.FirstOrDefault(u => u.Username == user.Username);
+                if (userMatch != null)
                 {
-                    FormsAuthentication.SetAuthCookie(user.Username, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Incorrect login.");
+                    if (Helpers.LoginHelper.IsPasswordMatch(user.Hash, userMatch.Salt, userMatch.Hash))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.Username, false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Incorrect login.");
+                    }
                 }
             }
             return View(user);

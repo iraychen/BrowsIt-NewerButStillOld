@@ -1,0 +1,51 @@
+﻿@model BROWSit.Models.GenerateModel
+
+@using (Html.BeginForm("Index", "Generate")) {
+    <fieldset>
+        <legend>Generate</legend>
+
+        <div class="editor-label">
+            @Html.Label("Word document file name")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("fileName")
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Product line")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("productLine")
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Document Title")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("documentTitle")
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Author Name")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("authorName")
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Purpose")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("purpose")
+            @Html.ValidationMessage("test")
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
