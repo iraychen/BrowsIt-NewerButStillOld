@@ -30,7 +30,8 @@ namespace BROWSit
             bundles.Add(new ScriptBundle("~/js")
                         .Include("~/Scripts/jquery-{version}.js")
                         .Include("~/Scripts/jquery-ui-{version}.js")
-                        .Include("~/Scripts/bootstrap.js")); 
+                        .Include("~/Scripts/bootstrap.js")
+                        .Include("~/bundles/jqueryval")); 
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

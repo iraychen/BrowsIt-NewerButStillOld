@@ -10,28 +10,34 @@ namespace BROWSit.Models
     public class GenerateModel
     {
         // General
-        public string fileName;
-        public string productLine;
-        public string documentTitle;
-        public string authorName;
-        public string versionNumber;
-        public string issueDate;
+        public string fileName { get; set; }
+        public string productLine { get; set; }
+        public string documentTitle { get; set; }
+        public string authorName { get; set; }
+        public string versionNumber { get; set; }
+        public string issueDate { get; set; }
 
         // Introduction
-        public string purpose;
-        public string relatedDocuments;
-        public string definitions;
+        public string purpose { get; set; }
+        public string relatedDocuments { get; set; }
+        public string definitions { get; set; }
 
         // Requirement Influencers
-        public string softwareReuse;
-        public string futureUses;
+        public string softwareReuse { get; set; }
+        public string futureUses { get; set; }
 
         // Requirements
-        public List<RequirementArea> areas;
+        public List<RequirementArea> areas { get; set; }
 
         public GenerateModel()
         {
             fileName = "";
+            productLine = "";
+            documentTitle = "";
+            authorName = "";
+            purpose = "";
+
+            areas = new List<RequirementArea>();
         }
 
         public GenerateModel(string p_fileName = "",
@@ -45,18 +51,32 @@ namespace BROWSit.Models
             documentTitle = p_documentTitle;
             authorName = p_authorName;
             purpose = p_purpose;
+
+            areas = new List<RequirementArea>();
         }
 
         public class RequirementArea
         {
-            public string name;
-            public List<Rqmt> requirements;
+            public string name { get; set; }
+            public List<Rqmt> requirements { get; set; }
+
+            public RequirementArea(string p_name = "")
+            {
+                name = p_name;
+                requirements = new List<Rqmt>();
+            }
         }
 
         public class Rqmt
         {
-            public string name;
-            public string text;
+            public string name { get; set; }
+            public string text { get; set; }
+
+            public Rqmt(string p_name = "", string p_text = "")
+            {
+                name = p_name;
+                text = p_text;
+            }
         }
     }
 }

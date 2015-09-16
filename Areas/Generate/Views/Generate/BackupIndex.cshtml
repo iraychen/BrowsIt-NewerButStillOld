@@ -1,15 +1,13 @@
-﻿@using BROWSit.Helpers;
-@using Newtonsoft.Json;
-
-@model BROWSit.Models.SRS
+﻿@using BROWSit.Models
+@model BROWSit.Models.GenerateModel
 
 @{
-    //JsonHelper.JsonNetResult jsonNetResult = new JsonHelper.JsonNetResult();
-    //jsonNetResult.Formatting = Newtonsoft.Json.Formatting.Indented;
-    //jsonNetResult.Data = Model;
-    
-    // Serialize the ViewModel to JSON right away
-    string output = JsonConvert.SerializeObject(Model);
+    List<string> areaNamesString = new List<string>();
+    foreach (GenerateModel.RequirementArea a in Model.areas)
+    {
+        areaNamesString.Add(a.name);   
+    }
+    string areaNames = String.Join("$", areaNamesString);
 }
 
 @using (Html.BeginForm())

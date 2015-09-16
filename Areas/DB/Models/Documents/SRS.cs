@@ -14,9 +14,11 @@ namespace BROWSit.Models
         /*********************
           Strings & Integers
         *********************/
+        public string Filename { get; set; }
+        public string ProductLine { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        public string Path { get; set; }
+        public string Purpose { get; set; }
 
         /***********************
           Foreign Keys & Joins
