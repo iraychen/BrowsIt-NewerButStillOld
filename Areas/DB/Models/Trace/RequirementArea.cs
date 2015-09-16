@@ -10,26 +10,20 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace BROWSit.Models
 {
-    public class Requirement : BaseEntityWithDate
+    public class RequirementArea : BaseEntity
     {
         /*********************
           Strings & Integers
         *********************/
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Rationale { get; set; }
+        public string Name { get; set; }
 
         /***********************
           Foreign Keys & Joins
         ***********************/
-        public int? TargetID { get; set; }
-        public virtual Target Target { get; set; }
+        public int? SRSID { get; set; }
+        public virtual SRS SRS { get; set; }
 
-        public int? AreaID { get; set; }
-        public virtual RequirementArea RequirementArea { get; set; }
-
-        public virtual ICollection<Platform> Platforms { get; set; }
-        public virtual ICollection<TestScript> TestScripts { get; set; }
+        public virtual ICollection<Requirement> Requirements { get; set; }
 
         /*******************
           Helper Functions
@@ -40,9 +34,6 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
-                        "Title",
-                        "Author",
-                        "Rationale"
                     };
                 return columnList;
             }
@@ -54,21 +45,15 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
-                        "ID",
-                        "Title",
-                        "Author",
-                        "Rationale",
-                        "CreationDate",
-                        "ModificationDate"
                     };
                 return columnList;
             }
         }
     }
 
-    public class RequirementConfiguration : EntityTypeConfiguration<Requirement>
+    public class RequirementAreaConfiguration : EntityTypeConfiguration<RequirementArea>
     {
-        public RequirementConfiguration()
+        public RequirementAreaConfiguration()
         {
             // Map entities to tables (to change table names from class names)
             // modelBuilder.Entity<Requirement>().ToTable("RequirementTableName");

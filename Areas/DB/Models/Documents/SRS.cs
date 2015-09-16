@@ -18,14 +18,17 @@ namespace BROWSit.Models
         public string ProductLine { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        public string Purpose { get; set; }
+        public int Version { get; set; }
+        public string SoftwareReuse { get; set; }
+        public string FutureUses { get; set; }
+        public string Interactions { get; set; }
 
         /***********************
           Foreign Keys & Joins
         ***********************/
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
-        public virtual ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<RequirementArea> RequirementAreas { get; set; }
 
         /*******************
           Helper Functions

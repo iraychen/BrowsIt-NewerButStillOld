@@ -23,6 +23,7 @@ namespace BROWSit.DAL
 
         // TRACE Tables
         public DbSet<Requirement> Requirements { get; set; }
+        public DbSet<RequirementArea> RequirementAreas { get; set; }
         public DbSet<Target> Targets { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Feature> Features { get; set; }
@@ -49,7 +50,8 @@ namespace BROWSit.DAL
             // Set one-to-many relationships (necessary if fk id doesn't follow ClassId convention)
             /* Do this in separate configurations or here (???) */
             //modelBuilder.Entity<Target>().HasMany<Requirement>(t => t.Requirements).WithRequired(r => r.Target).HasForeignKey(t => t.TargetID);
-            modelBuilder.Entity<SRS>().HasMany<Requirement>(s => s.Requirements).WithOptional(r => r.SRS).HasForeignKey(r => r.SRSID);
+            modelBuilder.Entity<SRS>().HasMany<RequirementArea>(s => s.RequirementAreas).WithOptional(r => r.SRS).HasForeignKey(r => r.SRSID);
+            modelBuilder.Entity<RequirementArea>().HasMany<Requirement>(a => a.Requirements).WithOptional(r => r.RequirementArea).HasForeignKey(r => r.AreaID);
             modelBuilder.Entity<Target>().HasMany<Requirement>(t => t.Requirements).WithOptional(r => r.Target).HasForeignKey(r => r.TargetID);
 
             // Set many-to-many relationships (super useful!)

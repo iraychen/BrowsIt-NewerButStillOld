@@ -1,7 +1,6 @@
 ﻿@using BROWSit.Helpers;
-@using Newtonsoft.Json;
 
-@model BROWSit.Models.SRS
+@model BROWSit.Models.GenerateModel
 
 @{
     //JsonHelper.JsonNetResult jsonNetResult = new JsonHelper.JsonNetResult();
@@ -9,7 +8,7 @@
     //jsonNetResult.Data = Model;
     
     // Serialize the ViewModel to JSON right away
-    string output = JsonConvert.SerializeObject(Model);
+    //string output = JsonConvert.SerializeObject(Model);
 }
 
 @using (Html.BeginForm())
@@ -20,7 +19,7 @@
             @Html.Label("Word document file name")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.fileName)
+            @Html.EditorFor(model => model.temporarySRS.Filename)
             @Html.ValidationMessage("test")
         </div>
 
@@ -28,7 +27,7 @@
             @Html.Label("Product line")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.productLine)
+            @Html.EditorFor(model => model.temporarySRS.ProductLine)
             @Html.ValidationMessage("test")
         </div>
 
@@ -36,7 +35,7 @@
             @Html.Label("Document Title")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.documentTitle)
+            @Html.EditorFor(model => model.temporarySRS.Title)
             @Html.ValidationMessage("test")
         </div>
 
@@ -44,7 +43,7 @@
             @Html.Label("Author Name")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.authorName)
+            @Html.EditorFor(model => model.temporarySRS.Author)
             @Html.ValidationMessage("test")
         </div>
 
@@ -98,44 +97,46 @@
 
     <hr /><h3>Requirements Areas</h3>
 
-        <input type="hidden" id="areaNames" name="areaNames" value="@areaNames">
         <ul>
-            @foreach (var item in Model.areas)
+            @if (Model != null && Model.areaNames != null)
             {
-                <li>
-                    <button class="btn btn-default" type="submit" name="submitType" value="update">-</button> 
-                    Area Name: @Html.DisplayFor(modelItem => item.name)
-                    <ul>
-                        <li>
-                            <table>
-                                <tr>
-                                    <th>
-                                        @Html.Label("Requirement Name")
-                                    </th>
-                                    <th>
-                                        @Html.Label("Requirement Description")
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @Html.TextArea("newRequirementName")
-                                    </td>
-                                    <td>
-                                        @Html.TextArea("newRequirementDescription")
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <button class="btn btn-default" type="submit" name="add" value="rqmt">Add requirement</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </li>
-                    </ul>
-                </li>
+                int icount = 0;
+                for (int i = 0; i < Model.areaNames.Count; i++)
+                {
+                    <li>
+                        <input type="hidden" name="mappings[@i]" value="@Model.mappings[i]" />
+                        <button class="btn btn-default" type="submit" name="submitType" value="update">-</button> 
+                        Area Name: @Html.EditorFor(m => m.areaNames[i])
+                        <ul>
+                            @if (Model.requirementNames != null)
+                            {
+                                int jcount = icount;
+                                for (int j = icount; j < (jcount + Model.mappings[i]); j++)
+                                {
+                                    icount++;
+                                    <li>
+                                        <table>
+                                            <tr>
+                                                <th>@Html.Label("Requirement Name")</th>
+                                                <th>@Html.Label("Requirement Description")</th>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.TextAreaFor(m => m.requirementNames[j])</td>
+                                                <td>@Html.TextAreaFor(m => m.requirementDescriptions[j])</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                } 
+                                <li>
+                                    <button class="btn btn-default" type="submit" name="add" value="@i">Add requirement</button>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
             }
         </ul>
-        @Html.TextArea("newAreaName")<button class="btn btn-default" type="submit" name="add" value="area">Add area</button>
+        <button class="btn btn-default" type="submit" name="add" value="area">Add area</button>
 
     <hr /><h3>Interactions</h3>
 

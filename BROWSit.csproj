@@ -164,6 +164,7 @@
     <Compile Include="Areas\DB\Models\Documents\TestScript.cs" />
     <Compile Include="Areas\DB\Models\Documents\PRS.cs" />
     <Compile Include="Areas\DB\Models\Documents\SRS.cs" />
+    <Compile Include="Areas\DB\Models\Trace\RequirementArea.cs" />
     <Compile Include="Areas\DB\Models\Trace\Feature.cs" />
     <Compile Include="Areas\DB\Models\UserAuthentication\Role.cs" />
     <Compile Include="Areas\DB\Models\UserAuthentication\User.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WordTemplateHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\WordHelper.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />

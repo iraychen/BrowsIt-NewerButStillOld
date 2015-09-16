@@ -11,8 +11,8 @@ using System.IO;
 using BROWSit.Models;
 using BROWSit.Helpers;
 using BROWSit.DAL;
-using Newtonsoft.Json;
 using Novacode;
+using System.Xml.Serialization;
 
 namespace BROWSit.Areas.Generate.Controllers
 {
@@ -33,53 +33,55 @@ namespace BROWSit.Areas.Generate.Controllers
 
         [HttpPost]
         public ActionResult Index(
-            string json,
-            string submitType = "", string add = "", string newAreaName = "")
+            GenerateModel model)
         {
             ViewBag.Title = "Generate";
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            // Deserialize the JSON string
-            if (!String.IsNullOrEmpty(json))
-            {
-                SRS deserializedSRS = JsonConvert.DeserializeObject<SRS>(json);
-            }
-
-            //GenerateModel updatedModel = new GenerateModel();
-
             if (ModelState.IsValid)
             {
-                List<string> areaNamesList = new List<string>(areaNames.Split(new char[] { '$' }, StringSplitOptions.RemoveEmptyEntries));
-                foreach (string s in areaNamesList)
+                if (!String.IsNullOrEmpty(model.submitType))
                 {
-                    GenerateModel.RequirementArea newArea = new GenerateModel.RequirementArea(s);
-                    updatedModel.areas.Add(newArea);
-                }
-
-                if (!String.IsNullOrEmpty(submitType))
-                {
-                    if (submitType == "create")
+                    if (model.submitType == "create")
                     {
-                        if (!String.IsNullOrEmpty(updatedModel.fileName))
+                        if (!String.IsNullOrEmpty(model.temporarySRS.Filename))
                         {
-                            WordHelper.exportToWord(updatedModel);
+                            // Export the model to OpenXML Word Document
+                            WordHelper.exportToWord(model);
+
+                            // Save SRS entity to Database
+                            BROWSit.DAL.BROWSitContext db = new BROWSit.DAL.BROWSitContext();
+                            db.SRS.Add(model.temporarySRS);
+                            db.SaveChanges();
                         }
                     }
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(add))
+                    if (!String.IsNullOrEmpty(model.add))
                     {
-                        if (add == "area")
+                        if (model.add == "area")
                         {
-                            GenerateModel.RequirementArea newArea = new GenerateModel.RequirementArea(newAreaName);
-                            updatedModel.areas.Add(newArea);
+                            if (model.areaNames != null)
+                            {
+                                model.areaNames.Add("New Area");
+                                model.mappings.Add(0);
+                            }
+                        }
+                        else
+                        {
+                            if (model.requirementNames != null)
+                            {
+                                model.requirementNames.Add("New Requirement Name");
+                                model.requirementDescriptions.Add("New Requirement Description");
+                                model.mappings[Int32.Parse(model.add)]++;
+                            }
                         }
                     }
                 }
             }
 
-            return View(updatedModel);
+            return View(model);
         }
 
         public ActionResult Create(string fileName = "")

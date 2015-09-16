@@ -58,15 +58,57 @@ namespace BROWSit.Migrations
 
         protected override void Seed(BROWSit.DAL.BROWSitContext context)
         {
+            // DOCUMENTS
+            context.Reports.AddOrUpdate(
+                r => r.Title,
+                new Report() { Title = "TestReport01", Author = "Seed", Query = "SELECT * FROM REQUIREMENTS" },
+                new Report() { Title = "TestReport02", Author = "Seed", Query = "SELECT * FROM PLATFORMS" },
+                new Report() { Title = "TestReport03", Author = "Seed", Query = "SELECT * FROM NOTHING" }
+            );
+            context.SaveChanges();
+
+            context.SRS.AddOrUpdate(
+                s => s.Title,
+                new SRS() { Filename = "SRS01", ProductLine = "yes", Title = "TestSRS01", Author = "Seed", Version = 1, SoftwareReuse = "qwre", FutureUses = "fdsa", Interactions = "asdf" },
+                new SRS() { Filename = "SRS02", ProductLine = "yes", Title = "TestSRS02", Author = "Seed", Version = 1, SoftwareReuse = "qwre", FutureUses = "fdsa", Interactions = "asdf" }
+            );
+            context.SaveChanges();
+
+            context.PRS.AddOrUpdate(
+                r => r.Title,
+                new PRS() { Title = "TestPRS01", Author = "Seed", Path = "?" },
+                new PRS() { Title = "TestPRS02", Author = "Seed", Path = "?" }
+            );
+            context.SaveChanges();
+
+            context.TestScripts.AddOrUpdate(
+                t => t.Title,
+                new TestScript() { Title = "Test01", Author = "Seed", Path = "?" },
+                new TestScript() { Title = "Test02", Author = "Seed", Path = "?" }
+            );
+            context.SaveChanges();
+
             // TRACE
+            SRS foreignSRS = context.SRS.FirstOrDefault<SRS>(s => s.Filename == "SRS01");
+            int SRSForeignID = foreignSRS.ID;
+            context.RequirementAreas.AddOrUpdate(
+                a => a.Name,
+                new RequirementArea() { Name = "TestArea01", SRSID = SRSForeignID },
+                new RequirementArea() { Name = "TestArea02", SRSID = SRSForeignID }
+            );
+            context.SaveChanges();
+
+            RequirementArea foreignArea = context.RequirementAreas.FirstOrDefault<RequirementArea>(a => a.Name == "TestArea01");
+            int AreaForeignID = foreignArea.ID;
             context.Requirements.AddOrUpdate(
                 r => r.Title,
-                new Requirement() { Title = "TestRequirement01", Author = "TestAuthor01", Rationale = "TestRationale01" },
-                new Requirement() { Title = "TestRequirement02", Author = "TestAuthor02", Rationale = "TestRationale02" },
-                new Requirement() { Title = "TestRequirement03", Author = "TestAuthor03", Rationale = "TestRationale03" },
-                new Requirement() { Title = "TestRequirement04", Author = "TestAuthor04", Rationale = "TestRationale04" },
-                new Requirement() { Title = "TestRequirement05", Author = "TestAuthor05", Rationale = "TestRationale05" }
+                new Requirement() { Title = "TestRequirement01", Author = "TestAuthor01", Rationale = "TestRationale01", AreaID = AreaForeignID },
+                new Requirement() { Title = "TestRequirement02", Author = "TestAuthor02", Rationale = "TestRationale02", AreaID = AreaForeignID },
+                new Requirement() { Title = "TestRequirement03", Author = "TestAuthor03", Rationale = "TestRationale03", AreaID = AreaForeignID },
+                new Requirement() { Title = "TestRequirement04", Author = "TestAuthor04", Rationale = "TestRationale04", AreaID = AreaForeignID },
+                new Requirement() { Title = "TestRequirement05", Author = "TestAuthor05", Rationale = "TestRationale05", AreaID = AreaForeignID }
             );
+            context.SaveChanges();
 
             context.Platforms.AddOrUpdate(
                 p => p.Name,
@@ -74,6 +116,7 @@ namespace BROWSit.Migrations
                 new Platform() { Name = "TestPlatform02" },
                 new Platform() { Name = "TestPlatform03" }
             );
+            context.SaveChanges();
 
             context.Targets.AddOrUpdate(
                 t => t.Name,
@@ -81,6 +124,7 @@ namespace BROWSit.Migrations
                 new Target() { Name = "TestTarget02" },
                 new Target() { Name = "TestTarget03" }
             );
+            context.SaveChanges();
 
             context.Features.AddOrUpdate(
                 f => f.Name,
@@ -88,6 +132,7 @@ namespace BROWSit.Migrations
                 new Feature() { Name = "TestFeature02" },
                 new Feature() { Name = "TestFeature03" }
             );
+            context.SaveChanges();
 
             // USERAUTHENTICATION
             context.Roles.AddOrUpdate(
@@ -95,6 +140,7 @@ namespace BROWSit.Migrations
                 new Role() { Name = "TestRole01" },
                 new Role() { Name = "TestRole02" }
             );
+            context.SaveChanges();
 
             LoginHelper.PasswordManager pm1 = new LoginHelper.PasswordManager("TestUser01", "password");
             LoginHelper.PasswordManager pm2 = new LoginHelper.PasswordManager("TestUser02", "password2");
@@ -103,32 +149,7 @@ namespace BROWSit.Migrations
                 new User() { Username = pm1.username, Hash = pm1.hash.getHashString(), Salt = pm1.salt.getSaltString() },
                 new User() { Username = pm2.username, Hash = pm2.hash.getHashString(), Salt = pm2.salt.getSaltString() }
             );
-
-            // DOCUMENTS
-            context.Reports.AddOrUpdate(
-                r => r.Title,
-                new Report() { Title = "TestReport01", Author = "Seed", Query = "SELECT * FROM REQUIREMENTS" },
-                new Report() { Title = "TestReport02", Author = "Seed", Query = "SELECT * FROM PLATFORMS" },
-                new Report() { Title = "TestReport03", Author = "Seed", Query = "SELECT * FROM NOTHING" }
-            );
-
-            context.SRS.AddOrUpdate(
-                s => s.Title,
-                new SRS() { Title = "TestSRS01", Author = "Seed", Path = "?" },
-                new SRS() { Title = "TestSRS02", Author = "Seed", Path = "?" }
-            );
-
-            context.PRS.AddOrUpdate(
-                r => r.Title,
-                new PRS() { Title = "TestPRS01", Author = "Seed", Path = "?" },
-                new PRS() { Title = "TestPRS02", Author = "Seed", Path = "?" }
-            );
-
-            context.TestScripts.AddOrUpdate(
-                t => t.Title,
-                new TestScript() { Title = "Test01", Author = "Seed", Path = "?" },
-                new TestScript() { Title = "Test02", Author = "Seed", Path = "?" }
-            );
+            context.SaveChanges();
         }
     }
 }
