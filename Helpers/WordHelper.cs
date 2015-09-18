@@ -183,121 +183,78 @@ namespace BROWSit.Helpers
                         ),
                         80 + i + j
                     );
+
+                    body.InsertAt<Paragraph>(
+                        new Paragraph(
+                            new ParagraphProperties(
+                                new ParagraphStyleId() { Val = "Rqmtdetails" }
+                            ),
+                            new Run(
+                                new Text() { Text = "Author: Messer, Takaji,   Created: 9/14/2015,   Modified: 9/14/2015" }
+                            ) { RsidRunProperties = "003305C4" }
+                        ) { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" },
+                        81 + i + j
+                    );
+
+                    body.InsertAt<Paragraph>(
+                        new Paragraph(
+                            new ParagraphProperties(
+                                new ParagraphStyleId() { Val = "Rqmtplatform" }
+                            ),
+                            new Run(
+                                new Text() { Text = "Platform: All" }
+                            ) { RsidRunProperties = "003305C4" }
+                        ) { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" },
+                        82 + i + j
+                    );
+
+                    body.InsertAt<Paragraph>(
+                        new Paragraph(
+                            new ParagraphProperties(
+                                new ParagraphStyleId() { Val = "Rqmttarget" }
+                            ),
+                            new Run(
+                                new Text() { Text = "Target: Unknown" }
+                            ) { RsidRunProperties = "003305C4" }
+                        ) { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" },
+                        83 + i + j
+                    );
+
+                    body.InsertAt<Paragraph>(
+                        new Paragraph(
+                            new ParagraphProperties(
+                                new ParagraphStyleId() { Val = "RqmtprsId" }
+                            ),
+                            new Run(
+                                new Text() { Text = "PRS ID: TBD" }
+                            ) { RsidRunProperties = "003305C4" }
+                        ) { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" },
+                        84 + i + j
+                    );
+
+                    body.InsertAt<Paragraph>(
+                        new Paragraph(
+                            new ParagraphProperties(
+                                new ParagraphStyleId() { Val = "RqmttestPath" }
+                            ),
+                            new Run(
+                                new Text() { Text = "Tests: ", Space = SpaceProcessingModeValues.Preserve }
+                            ) { RsidRunProperties = "003305C4" },
+                            new Hyperlink(
+                                new ProofError() { Type = ProofingErrorValues.SpellStart },
+                                new Run(
+                                    new RunProperties(
+                                        new RunStyle() { Val = "Hyperlink" }
+                                    ),
+                                    new Text() { Text = "TBDLink" }
+                                ) { RsidRunProperties = "003305C4" },
+                                new ProofError() { Type = ProofingErrorValues.SpellEnd }
+                            ) { History = true, Id = "rId11" }
+                        ) { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" },
+                        85 + i + j
+                    );
                 }
             }
-
-            /*Paragraph paragraph107 = new Paragraph() { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" };
-
-            ParagraphProperties paragraphProperties101 = new ParagraphProperties();
-            ParagraphStyleId paragraphStyleId70 = new ParagraphStyleId() { Val = "Rqmtdetails" };
-
-            paragraphProperties101.Append(paragraphStyleId70);
-
-            Run run389 = new Run() { RsidRunProperties = "003305C4" };
-            Text text254 = new Text();
-            text254.Text = "Author: Messer, Takaji,   Created: 9/14/2015,   Modified: 9/14/2015";
-
-            run389.Append(text254);
-
-            paragraph107.Append(paragraphProperties101);
-            paragraph107.Append(run389);
-
-            Paragraph paragraph108 = new Paragraph() { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" };
-
-            ParagraphProperties paragraphProperties102 = new ParagraphProperties();
-            ParagraphStyleId paragraphStyleId71 = new ParagraphStyleId() { Val = "Rqmtplatform" };
-
-            paragraphProperties102.Append(paragraphStyleId71);
-
-            Run run390 = new Run() { RsidRunProperties = "003305C4" };
-            Text text255 = new Text();
-            text255.Text = "Platform: All";
-
-            run390.Append(text255);
-
-            paragraph108.Append(paragraphProperties102);
-            paragraph108.Append(run390);
-
-            Paragraph paragraph109 = new Paragraph() { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" };
-
-            ParagraphProperties paragraphProperties103 = new ParagraphProperties();
-            ParagraphStyleId paragraphStyleId72 = new ParagraphStyleId() { Val = "Rqmttarget" };
-
-            paragraphProperties103.Append(paragraphStyleId72);
-
-            Run run391 = new Run() { RsidRunProperties = "003305C4" };
-            Text text256 = new Text();
-            text256.Text = "Target: Unknown";
-
-            run391.Append(text256);
-
-            paragraph109.Append(paragraphProperties103);
-            paragraph109.Append(run391);
-
-            Paragraph paragraph110 = new Paragraph() { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" };
-
-            ParagraphProperties paragraphProperties104 = new ParagraphProperties();
-            ParagraphStyleId paragraphStyleId73 = new ParagraphStyleId() { Val = "RqmtprsId" };
-
-            paragraphProperties104.Append(paragraphStyleId73);
-
-            Run run392 = new Run() { RsidRunProperties = "003305C4" };
-            Text text257 = new Text();
-            text257.Text = "PRS ID: TBD";
-
-            run392.Append(text257);
-
-            paragraph110.Append(paragraphProperties104);
-            paragraph110.Append(run392);
-
-            Paragraph paragraph111 = new Paragraph() { RsidParagraphMarkRevision = "003305C4", RsidParagraphAddition = "000537C0", RsidParagraphProperties = "000537C0", RsidRunAdditionDefault = "000537C0" };
-
-            ParagraphProperties paragraphProperties105 = new ParagraphProperties();
-            ParagraphStyleId paragraphStyleId74 = new ParagraphStyleId() { Val = "RqmttestPath" };
-
-            paragraphProperties105.Append(paragraphStyleId74);
-
-            Run run393 = new Run() { RsidRunProperties = "003305C4" };
-            Text text258 = new Text() { Space = SpaceProcessingModeValues.Preserve };
-            text258.Text = "Tests: ";
-
-            run393.Append(text258);
-
-            Hyperlink hyperlink4 = new Hyperlink() { History = true, Id = "rId11" };
-            ProofError proofError3 = new ProofError() { Type = ProofingErrorValues.SpellStart };
-
-            Run run394 = new Run() { RsidRunProperties = "003305C4" };
-
-            RunProperties runProperties224 = new RunProperties();
-            RunStyle runStyle16 = new RunStyle() { Val = "Hyperlink" };
-
-            runProperties224.Append(runStyle16);
-            Text text259 = new Text();
-            text259.Text = "TBDLink";
-
-            run394.Append(runProperties224);
-            run394.Append(text259);
-            ProofError proofError4 = new ProofError() { Type = ProofingErrorValues.SpellEnd };
-
-            hyperlink4.Append(proofError3);
-            hyperlink4.Append(run394);
-            hyperlink4.Append(proofError4);
-
-            paragraph111.Append(paragraphProperties105);
-            paragraph111.Append(run393);
-            paragraph111.Append(hyperlink4);*/
-
-
-
-
-
-
-
-
-
-
-
-
 
             // Page break!
             new Paragraph(new Run(new Break() { Type = BreakValues.Page }));

@@ -8,6 +8,7 @@ using System.Data;
 using ClosedXML.Excel;
 using System.IO;
 using BROWSit.Helpers;
+using BROWSit.Helpers.SqlHelper;
 
 namespace BROWSit.Areas.Export.Controllers
 {
@@ -34,7 +35,8 @@ namespace BROWSit.Areas.Export.Controllers
         public ActionResult Create(string rawSql = "", string workSheetName = "", string tableName = "", string fileName = "")
         {
             // Query in traditional SQL... safely
-            SqlHelper.SqlTable sqlTable = SqlHelper.getTableFromRawSql(rawSql);
+            SqlTable sqlTable = new SqlTable();
+            sqlTable.getTableFromRawSql(rawSql);
             ExcelHelper.exportToExcel(sqlTable.contents, tableName, workSheetName, fileName);
 
             // Does this never get reached?

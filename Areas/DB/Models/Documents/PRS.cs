@@ -35,7 +35,7 @@ namespace BROWSit.Models
                     {
                         "Title",
                         "Author",
-                        "Query",
+                        "Path",
                         "CreationDate",
                         "ModificationDate"
                     };
@@ -52,7 +52,7 @@ namespace BROWSit.Models
                         "ID",
                         "Title",
                         "Author",
-                        "Query",
+                        "Path",
                         "CreationDate",
                         "ModificationDate"
                     };

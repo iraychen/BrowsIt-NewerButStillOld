@@ -5,42 +5,54 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BROWSit.Helpers;
+using BROWSit.Helpers.SqlHelper;
+using BROWSit.Helpers.PermissionsHelper;
 
 namespace BROWSit.Models
 {
     public class DataModel
     {
-        public string tableName;
+        // General
+        public string category;
         public List<SelectListItem> tableNames;
-        public string limit;
-        public string sortUp;
-        public string sortDown;
+
+        // SqlHelper
+        public SqlParameters parameters;
+        public SqlTable table;
+
+        // Permissions
+        public TableEntryPermissions permissions;
+
+        // Misc.
         public List<string> hiddenColumnList;
-        public DataTable table;
-        public string rawSqlString;
         public StatsHelper.HelperStatistics stats;
+        public string error;
 
         public DataModel()
         {
-            tableName = "";
+            category = "";
             tableNames = null;
-            limit = "";
-            sortUp = "";
-            sortDown = "";
+            parameters = new SqlParameters();
+            table = new SqlTable();
             hiddenColumnList = new List<string>();
-            rawSqlString = "";
             stats = new StatsHelper.HelperStatistics();
+            error = "";
         }
 
-        public DataModel(string p_table, string p_limit, string p_showStats, string p_sortUp, string p_sortDown, string p_columns)
+        public DataModel(string p_category, string p_tableName, string p_limit, string p_showStats, string p_sortUp, string p_sortDown, string p_columns)
         {
-            tableName = p_table;
-            tableNames = getTableSelectList();
-            limit = p_limit;
-            sortUp = p_sortUp;
-            sortDown = p_sortDown;
+            category = p_category;
+
+            string tableName = setTable(p_tableName);
+            parameters = new SqlParameters(tableName, p_limit, p_sortUp, p_sortDown);
+
+            permissions = new TableEntryPermissions();
+            permissions.setPermissions(p_category, p_tableName);
+
+            table = new SqlTable();
+            
             hiddenColumnList = new List<string>(p_columns.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-            rawSqlString = "";
+            
             if (!String.IsNullOrEmpty(p_showStats))
             {
                 stats = new StatsHelper.HelperStatistics();
@@ -49,20 +61,34 @@ namespace BROWSit.Models
             {
                 stats = null;
             }
-            
+
+            error = "";
         }
 
-        public List<SelectListItem> getTableSelectList()
+        public string setTable(string p_table)
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-
-            list.Add(new SelectListItem { Text = "--Select Table--", Value = "" });
-            list.Add(new SelectListItem { Text = "Requirements", Value = "Requirements" });
-            list.Add(new SelectListItem { Text = "Platforms", Value = "Platforms" });
-            list.Add(new SelectListItem { Text = "Targets", Value = "Targets" });
-            list.Add(new SelectListItem { Text = "Features", Value = "Features" });
-
-            return list;
+            if (category == "Data")
+            {
+                tableNames = new List<SelectListItem>();
+                tableNames.Add(new SelectListItem { Text = "--Select Table--", Value = "" });
+                tableNames.Add(new SelectListItem { Text = "Requirements", Value = "Requirements" });
+                tableNames.Add(new SelectListItem { Text = "Platforms", Value = "Platforms" });
+                tableNames.Add(new SelectListItem { Text = "Targets", Value = "Targets" });
+                tableNames.Add(new SelectListItem { Text = "Features", Value = "Features" });
+            }
+            else if (category == "Documents")
+            {
+                tableNames = new List<SelectListItem>();
+                tableNames.Add(new SelectListItem { Text = "--Select Table--", Value = "" });
+                tableNames.Add(new SelectListItem { Text = "SRS", Value = "SRS" });
+                tableNames.Add(new SelectListItem { Text = "PRS", Value = "PRS" });
+                tableNames.Add(new SelectListItem { Text = "TestScripts", Value = "TestScripts" });
+            }
+            else if (category == "Reports")
+            {
+                return "Reports";
+            }
+            return p_table;
         }
 
         public void updateHiddenColumnList(string hide, string show)
@@ -80,7 +106,7 @@ namespace BROWSit.Models
         public void getStatisticsAndTable(DataTable p_table)
         {
             // Copy over datatable
-            table = p_table;
+            table.contents = p_table;
 
             if (stats != null)
             {

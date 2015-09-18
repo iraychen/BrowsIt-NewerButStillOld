@@ -1,0 +1,51 @@
+﻿@using BROWSit.Models;
+@model BROWSit.Models.RequirementDBModel
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend>Requirement</legend>
+
+        <h4>@Model.message</h4>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.requirement.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.requirement.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.requirement.Rationale)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.requirement.Rationale)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.requirement.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.requirement.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.requirement.Target)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.myTarget, 
+                new SelectList(Model.targets, "ID", "Name"))
+        </div>
+
+        <p>
+            <button class="btn btn-default" type="submit" name="submitType" value="create">Create</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

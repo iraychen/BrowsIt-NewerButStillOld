@@ -1,0 +1,29 @@
+﻿@using BROWSit.Models;
+@model BROWSit.Models.TargetDBModel
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend>Target</legend>
+
+        <h4>@Model.message</h4>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.target.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.target.Name)
+        </div>
+
+        <p>
+            <button class="btn btn-default" type="submit" name="submitType" value="create">Create</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

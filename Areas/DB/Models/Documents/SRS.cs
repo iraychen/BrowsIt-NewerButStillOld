@@ -39,9 +39,11 @@ namespace BROWSit.Models
             {
                 List<string> columnList = new List<string>
                     {
+                        "Filename",
+                        "ProductLine",
                         "Title",
                         "Author",
-                        "Query",
+                        "Version",
                         "CreationDate",
                         "ModificationDate"
                     };
@@ -56,9 +58,14 @@ namespace BROWSit.Models
                 List<string> columnList = new List<string>
                     {
                         "ID",
+                        "Filename",
+                        "ProductLine",
                         "Title",
                         "Author",
-                        "Query",
+                        "Version",
+                        "SoftwareReuse",
+                        "FutureUses",
+                        "Interactions",
                         "CreationDate",
                         "ModificationDate"
                     };

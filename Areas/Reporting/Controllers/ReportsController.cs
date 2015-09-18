@@ -50,9 +50,9 @@ namespace BROWSit.Areas.Reporting.Controllers
             }
 
             // Query Reports in traditional SQL... safely
-            SqlHelper.SqlTable sqlTable = SqlHelper.getTableFromRawSql(report.Query);
-            model.table = sqlTable.contents;
-            model.error = String.Join<string>("\n", sqlTable.errorStrings);
+            //SqlHelper.SqlTable sqlTable = SqlHelper.getTableFromRawSql(report.Query);
+            //model.table = sqlTable.contents;
+            //model.error = String.Join<string>("\n", sqlTable.errorStrings);
 
             return View(model);
         }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BROWSit.Models;
 using BROWSit.Helpers;
+using BROWSit.Helpers.SqlHelper;
 
 namespace BROWSit.Areas.Data.Controllers
 {
@@ -12,7 +13,8 @@ namespace BROWSit.Areas.Data.Controllers
     {
         BROWSit.DAL.BROWSitContext db = new BROWSit.DAL.BROWSitContext();
 
-        public ActionResult Index(string table = "", 
+        public ActionResult Index(string category = "",
+                                string table = "", 
                                 string limit = "",
                                 string stats = "",
                                 string hiddenColumns = "",
@@ -24,17 +26,14 @@ namespace BROWSit.Areas.Data.Controllers
                                 )
         {
             // Basic page information
-            ViewBag.Title = "Dataview";
+            ViewBag.Title = category + " View";
             ViewBag.Message = "Display table data";
 
             // DataViewModel
-            DataModel model = new DataModel(table, limit, showStats, sortUp, sortDown, hiddenColumns);
+            DataModel model = new DataModel(category, table, limit, showStats, sortUp, sortDown, hiddenColumns);
 
-            if (!String.IsNullOrEmpty(table))
+            if (!String.IsNullOrEmpty(model.parameters.tableName))
             {
-                // Create sqlParameters object
-                SqlHelper.HelperSqlParameters parameters = new SqlHelper.HelperSqlParameters(table, limit, sortUp, sortDown);
-
                 // Update columns
                 model.updateHiddenColumnList(hide, show);
 
@@ -45,40 +44,55 @@ namespace BROWSit.Areas.Data.Controllers
                     model.hiddenColumnList.Clear();
                 }
 
-                // Depending on the table, construct a DataTable to pass to the view
-                switch (table)
-                {
-                    case "Requirements":
-                        // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Requirement.getDefaultColumns, Requirement.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Requirement.getDefaultColumns, Requirement.getAllColumns, model.hiddenColumnList);
-                        break;
-                    case "Platforms":
-                        // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Platform.getDefaultColumns, Platform.getAllColumns, model.hiddenColumnList);
-                        break;
-                    case "Targets":
-                        // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Target.getDefaultColumns, Target.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Target.getDefaultColumns, Target.getAllColumns, model.hiddenColumnList);
-                        break;
-                    case "Features":
-                        // Build list of display columns and list of hidden columns
-                        parameters.columns = DataTableHelper.columnsToDisplay(Feature.getDefaultColumns, Feature.getAllColumns, model.hiddenColumnList);
-                        model.hiddenColumnList = DataTableHelper.columnsToHide(Feature.getDefaultColumns, Feature.getAllColumns, model.hiddenColumnList);
-                        break;
-                    default:
-                        break;
-                }
+                // Grab column lists based on the defined table
+                List<string> defaultColumns = DataAreaHelper.getDefaultColumnsFromTable(table);
+                List<string> allColumns = DataAreaHelper.getAllColumnsFromTable(table);
+
+                // Construct a DataTable to pass to the view
+                model.parameters.columns = DataTableHelper.columnsToDisplay(defaultColumns, allColumns, model.hiddenColumnList);
+                model.hiddenColumnList = DataTableHelper.columnsToHide(defaultColumns, allColumns, model.hiddenColumnList);
 
                 // Query Reports in traditional SQL... safely
-                model.rawSqlString = parameters.constructAndGetSqlString(false);
-                SqlHelper.SqlTable sqlTable = SqlHelper.getTableFromRawSql(parameters.sqlStatement);
-                model.table = sqlTable.contents;
+                model.parameters.constructAndGetSqlString(false);
+                model.table = model.parameters.getTableFromRawSql();
                 //model.error = string.Join<string>("\n", sqlTable.errorStrings);
             }
             return View(model);
+        }
+
+        public ActionResult Detail(string category = "",
+                                string table = "",
+                                int id = 0
+                                )
+        {
+            // Basic page information
+            ViewBag.Title = category + " View";
+            ViewBag.Message = "Display table data";
+
+            if (category == "Reports")
+            {
+                // Find the correct report
+                Report report = db.Reports.Find(id);
+
+                // Verify that the report is not null
+                if (report == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Get report query
+                //SqlParameters parameters = new SqlParameters();
+                //parameters.sqlStatement = report.Query;
+
+                // Run query and get datatable
+                SqlTable sqlTable = new SqlTable();
+                sqlTable.getTableFromRawSql(report.Query);
+
+                // Proceed to Detail view
+                return View(sqlTable);
+            }
+
+            return View();
         }
     }
 }

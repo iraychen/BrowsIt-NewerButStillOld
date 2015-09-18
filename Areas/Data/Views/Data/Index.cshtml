@@ -15,7 +15,7 @@
         });
         
         int countCheck = 1;
-        while (Model.table.Rows.Count >= countCheck)
+        while (Model.table.contents.Rows.Count >= countCheck)
         {
             resultsItems.Add(new SelectListItem
             {
@@ -44,7 +44,7 @@
     
     foreach (SelectListItem i in resultsItems)
     {
-        if (i.Text == Model.limit.ToString())
+        if (i.Text == Model.parameters.limit.ToString())
         {
             i.Selected = true;
         }
@@ -54,55 +54,101 @@
 @using (Html.BeginForm("Index", "Data"))
 {
     // Set hidden values
+    <input type="hidden" id="category" name="category" value="@Model.category">
     <input type="hidden" id="hiddenColumns" name="hiddenColumns" value="@hiddenColumns">
     
     <hr />
-    <div class="selection">
-        Select table: @Html.DropDownList("table", Model.tableNames, new { @class = "form-control", onchange = "this.form.submit();"})
-        Limit results: @Html.DropDownList("limit", resultsItems, new { @class = "form-control", onchange = "this.form.submit();" })
-    </div>
     
-    <hr />
+    if (Model.category != "Reports")
+    {
+        <div class="selection">
+            Select table: @Html.DropDownList("table", Model.tableNames, new { @class = "form-control", onchange = "this.form.submit();"})
+            Limit results: @Html.DropDownList("limit", resultsItems, new { @class = "form-control", onchange = "this.form.submit();" })
+        </div>
+        <hr />
+    }
+    else
+    {
+        <input type="hidden" id="table" name="table" value="@Model.parameters.tableName">
+    }
+    
     <div class="display">
-        @if (String.IsNullOrEmpty(Model.tableName)) {
+        @if (String.IsNullOrEmpty(Model.parameters.tableName)) {
             <h4>-- No table specified --</h4>
         }
         else {
-            <h3>@Model.tableName Table</h3>
+            if (Model.permissions.canCreate == true)
+            {
+                <p>@Html.ActionLink("Create New", "Create", @Model.parameters.tableName, new { area = "DB" }, null)</p>
+            }
+            <h3>@Model.parameters.tableName Table</h3>
             <table class="table table-striped table-bordered table-hover">
                 <tr>
-                @foreach (System.Data.DataColumn c in Model.table.Columns)
-                {
-                    <th>
-                        <button class="btn btn-default" type="submit" name="hide" value="@c.Caption" ><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-                        @c.Caption
-                        @if (Model.sortDown == c.Caption)
-                        {
-                            <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button> 
-                        }
-                        @if (Model.sortUp == c.Caption)
-                        {
-                            <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button> 
-                        }
-                    </th>
-                }
+                    @foreach (System.Data.DataColumn c in Model.table.contents.Columns)
+                    {
+                        <th>
+                            <button class="btn btn-default" type="submit" name="hide" value="@c.Caption" ><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+                            @c.Caption
+                            @if (Model.parameters.sortBy == c.Caption)
+                            {
+                                if (Model.parameters.sortDirection == BROWSit.Helpers.SqlHelper.Direction.Down)
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
+                                }
+                                else if (Model.parameters.sortDirection == BROWSit.Helpers.SqlHelper.Direction.Up)
+                                {
+                                    <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+                                }
+                            }
+                            else
+                            {
+                                <button class="btn btn-default" type="submit" name="sortDown" value="@c.Caption"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button> 
+                                <button class="btn btn-default" type="submit" name="sortUp" value="@c.Caption"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button> 
+                            }
+                        </th>
+                    }
+                    <th>--Action--</th>
                 </tr>
-                @foreach (System.Data.DataRow r in Model.table.Rows)
-                {
-                    <tr>
-                        @foreach (var v in r.ItemArray)
-                        {
-                            <td>@v.ToString()</td>
-                        }
-                    </tr>
+                @{
+                    int count = 0;
+                    foreach (System.Data.DataRow r in Model.table.contents.Rows)
+                    {
+                        <tr>
+                            @foreach (var v in r.ItemArray)
+                            {
+                                <td>@v.ToString()</td>
+                            }
+                            <td>
+                                |
+                                @{
+                                    bool anyAction = false;
+                                    if (Model.permissions.canView == true)
+                                    {
+                                        @Html.ActionLink("View", "Detail", new { category=@Model.category, table=@Model.parameters.tableName, id=Model.table.idList[count] })
+                                        anyAction = true;
+                                        @:|
+                                    }
+                                    if (Model.permissions.canEdit == true)
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", new  { category=@Model.category, table=@Model.parameters.tableName, id=Model.table.idList[count] })
+                                        anyAction = true;
+                                        @:|
+                                    }
+                                    if (Model.permissions.canDelete == true)
+                                    {
+                                        @Html.ActionLink("Delete", "Delete", new { category=@Model.category, table=@Model.parameters.tableName, id=Model.table.idList[count] }) 
+                                        anyAction = true;
+                                        @:|
+                                    }  
+                                    if (anyAction == false)
+                                    {
+                                        @: -- No actions available -- |
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        count++;
+                    }
                 }
             </table>
             if (Model.hiddenColumnList.Count > 0)
@@ -128,14 +174,14 @@
 @using (Html.BeginForm("Index", "Export", new { area = "Export" }))
 {
     // Set hidden values
-    <input type="hidden" id="rawSql" name="rawSql" value="@Model.rawSqlString">
-    <input type="hidden" id="tableName" name="tableName" value="@Model.tableName">
-    if (!String.IsNullOrEmpty(Model.rawSqlString))
+    <input type="hidden" id="rawSql" name="rawSql" value="@Model.parameters.sqlStatement">
+    <input type="hidden" id="tableName" name="tableName" value="@Model.parameters.tableName">
+    if (!String.IsNullOrEmpty(Model.parameters.sqlStatement))
     {
         <hr />
         <div class="query">
             <h5>Raw SQL String: </h5>
-            @Html.TextArea("rawSql", Model.rawSqlString, new { @style = "width: 500px; height: 100px", @readonly = "readonly" })
+            @Html.TextArea("rawSql", Model.parameters.sqlStatement, new { @style = "width: 500px; height: 100px", @readonly = "readonly" })
             <!--<button name="rawSqlChanged" value="yes">Submit</button>-->
         </div>
     
