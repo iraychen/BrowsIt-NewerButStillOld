@@ -26,11 +26,11 @@ namespace BROWSit.Helpers
 {
     public class WordHelper
     {
-        public static void exportToWord(GenerateModel model)
+        public static void exportToWord(SRSCRUDModel model)
         {
             System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
             response.Clear();
-            response.AddHeader("Content-Disposition", "attachment; filename=" + model.temporarySRS.Filename + ".docx;");
+            response.AddHeader("Content-Disposition", "attachment; filename=" + model.srs.Filename + ".docx;");
             using (MemoryStream stream = new MemoryStream())
             {
                 using (WordprocessingDocument document = WordprocessingDocument.Create(stream, WordprocessingDocumentType.Document))
@@ -44,7 +44,7 @@ namespace BROWSit.Helpers
         }
 
         // Adds child parts and generates content of the specified part.
-        public static void CreateParts(WordprocessingDocument document, GenerateModel model)
+        public static void CreateParts(WordprocessingDocument document, SRSCRUDModel model)
         {
             ExtendedFilePropertiesPart extendedFilePropertiesPart1 = document.AddNewPart<ExtendedFilePropertiesPart>("rId3");
             WordTemplateHelper.GenerateExtendedFilePropertiesPart1Content(extendedFilePropertiesPart1);
@@ -96,7 +96,7 @@ namespace BROWSit.Helpers
         }
 
         // This can be used for easily inserting dynamic template creation!
-        public static Body customBodyOrdering(Body body, List<OpenXmlElement> elementList, GenerateModel model)
+        public static Body customBodyOrdering(Body body, List<OpenXmlElement> elementList, SRSCRUDModel model)
         {
             foreach (OpenXmlElement e in elementList)
             {

@@ -1,43 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.IO;
 using BROWSit.Models;
 using BROWSit.Helpers;
-using BROWSit.DAL;
-using Novacode;
-using System.Xml.Serialization;
+using BROWSit.Helpers.SqlHelper;
 
-namespace BROWSit.Areas.Generate.Controllers
+namespace BROWSit.Areas.DB.Controllers
 {
-    public class GenerateController : Controller
+    public class SRSController : Controller
     {
-        private BROWSitContext db = new BROWSitContext();
+        private BROWSit.DAL.BROWSitContext db = new BROWSit.DAL.BROWSitContext();
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Create(string message = "")
         {
-            ViewBag.Title = "Generate";
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            GenerateModel model = new GenerateModel();
-
+            SRSCRUDModel model = new SRSCRUDModel(message);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Index(
-            SRSCRUDModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(SRSCRUDModel model)
         {
-            ViewBag.Title = "Generate";
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(model.submitType))
@@ -84,15 +70,14 @@ namespace BROWSit.Areas.Generate.Controllers
             return View(model);
         }
 
-        public ActionResult Create(string fileName = "")
-        {
-            ViewBag.Title = "Generate";
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            //DataTable testTable = new DataTable();
-            //ExcelHelper.exportToWord(testTable, "", fileName);
-
-            return View();
-        }
+        /*{
+            if (ModelState.IsValid)
+            {
+                db.SRS.Add(srs);
+                db.SaveChanges();
+                return RedirectToAction("Create", new { @message = "Successfully added SRS." });
+            }
+            return RedirectToAction("Create", new { @message = "Failed to add SRS." });
+        }*/
     }
 }

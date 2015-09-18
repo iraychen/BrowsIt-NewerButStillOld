@@ -1,5 +1,5 @@
 ﻿@using BROWSit.Models;
-@model BROWSit.Models.PlatformCRUDModel
+@model BROWSit.Models.PRSCRUDModel
 
 <h2>Create</h2>
 
@@ -7,23 +7,29 @@
     @Html.AntiForgeryToken()
 
     <fieldset>
-        <legend>Platform</legend>
+        <legend>PRS</legend>
 
         <h4>@Model.message</h4>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.platform.Name)
+            @Html.LabelFor(model => model.prs.Title)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.platform.Name)
+            @Html.EditorFor(model => model.prs.Title)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.platform.Requirements)
+            @Html.LabelFor(model => model.prs.Author)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.myRequirement, 
-                new SelectList(Model.requirements, "ID", "Title"))
+            @Html.EditorFor(model => model.prs.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.prs.Path)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.prs.Path)
         </div>
 
         <p>

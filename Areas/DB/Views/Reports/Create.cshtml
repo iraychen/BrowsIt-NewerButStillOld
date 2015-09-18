@@ -1,0 +1,59 @@
+﻿@using BROWSit.Models;
+@model BROWSit.Models.ReportCRUDModel
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend>Requirement</legend>
+
+        <h4>@Model.message</h4>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.report.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.report.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.report.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.report.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.report.Query)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.report.Query)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.report.Users)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.myUser, 
+                new SelectList(Model.users, "ID", "Username"))
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.report.Roles)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.myRole, 
+                new SelectList(Model.roles, "ID", "Name"))
+        </div>
+
+        <p>
+            <button class="btn btn-default" type="submit" name="submitType" value="create">Create</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

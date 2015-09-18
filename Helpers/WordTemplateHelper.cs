@@ -255,7 +255,7 @@ namespace BROWSit.Helpers
         }
 
         // Generates content of mainDocumentPart1.
-        public static void GenerateMainDocumentPart1Content(MainDocumentPart mainDocumentPart1, GenerateModel model)
+        public static void GenerateMainDocumentPart1Content(MainDocumentPart mainDocumentPart1, SRSCRUDModel model)
         {
             Document document1 = new Document(){ MCAttributes = new MarkupCompatibilityAttributes(){ Ignorable = "w14 w15 wp14" }  };
             document1.AddNamespaceDeclaration("wpc", "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas");
@@ -518,7 +518,7 @@ namespace BROWSit.Helpers
             runProperties5.Append(boldComplexScript1);
             runProperties5.Append(fontSize6);
             Text text1 = new Text();
-            text1.Text = model.temporarySRS.ProductLine + " Product Line";
+            text1.Text = model.srs.ProductLine + " Product Line";
 
             run5.Append(runProperties5);
             run5.Append(text1);

@@ -1,0 +1,156 @@
+﻿@using BROWSit.Helpers;
+
+@model BROWSit.Models.SRSCRUDModel
+
+@{
+    //JsonHelper.JsonNetResult jsonNetResult = new JsonHelper.JsonNetResult();
+    //jsonNetResult.Formatting = Newtonsoft.Json.Formatting.Indented;
+    //jsonNetResult.Data = Model;
+    
+    // Serialize the ViewModel to JSON right away
+    //string output = JsonConvert.SerializeObject(Model);
+}
+
+@using (Html.BeginForm())
+{
+    <h3>General</h3>
+    
+        <div class="editor-label">
+            @Html.Label("Word document file name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.srs.Filename)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Product line")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.srs.ProductLine)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Document Title")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.srs.Title)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Author Name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.srs.Author)
+            @Html.ValidationMessage("test")
+        </div>
+
+    <hr /><h3>Introduction</h3>
+
+        <div class="editor-label">
+            @Html.Label("Purpose")
+        </div>
+        <div class="editor-field">
+            @Html.TextArea("purpose", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Related Documents")
+        </div>
+        <p style="font-style: italic">Give explicit paths to your documentation, including both ClearCase and regular file server documents.  It’s probably best to point to ClearCase stuff via web links, although showing both the VOB name and the web link is ideal.  Note that not all documents are exposed on the web.</p>
+        <div class="editor-field">
+            @Html.TextArea("relatedDocuments", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Definitions, Acronyms and Abbreviations")
+        </div>
+        <p style="font-style: italic">List feature-specific terms that apply specifically to the features described in this document. More general terminology should be described in the Route66 Glossary (route66 VOB: software/documents/misc/glossary.doc)</p>
+        <div class="editor-field">
+            @Html.TextArea("definitions", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+    <hr /><h3>Requirements Influencers</h3>
+
+        <div class="editor-label">
+            @Html.Label("Software Reuse")
+        </div>
+        <p style="font-style: italic">Describe any software reuse that this product will benefit from.  It is suggested that you identify the source of the reuse and clearly describe what is being reused (requirements? architecture? code? test cases? etc.)</p>
+        <div class="editor-field">
+            @Html.TextArea("softwareReuse", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Future Uses of this Software")
+        </div>
+        <p style="font-style: italic">During the requirements process, the software team can explicitly work to create reusable components (requirements, architecture, design, code, tests, etc.).  This section should describe the potential areas of reuse after the program is over.  Note that this reuse can be the entire project (for example, if the team has identified complete follow-on projects, they can be documented) or pieces of it (for example, reusing the measurement subsystem in other projects).</p>
+        <div class="editor-field">
+            @Html.TextArea("futureUses", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+    <hr /><h3>Requirements Areas</h3>
+
+        <ul>
+            @if (Model != null && Model.areaNames != null)
+            {
+                int icount = 0;
+                for (int i = 0; i < Model.areaNames.Count; i++)
+                {
+                    <li>
+                        <input type="hidden" name="mappings[@i]" value="@Model.mappings[i]" />
+                        <button class="btn btn-default" type="submit" name="submitType" value="update">-</button> 
+                        Area Name: @Html.EditorFor(m => m.areaNames[i])
+                        <ul>
+                            @if (Model.requirementNames != null)
+                            {
+                                int jcount = icount;
+                                for (int j = icount; j < (jcount + Model.mappings[i]); j++)
+                                {
+                                    icount++;
+                                    <li>
+                                        <table>
+                                            <tr>
+                                                <th>@Html.Label("Requirement Name")</th>
+                                                <th>@Html.Label("Requirement Description")</th>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.TextAreaFor(m => m.requirementNames[j])</td>
+                                                <td>@Html.TextAreaFor(m => m.requirementDescriptions[j])</td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                } 
+                                <li>
+                                    <button class="btn btn-default" type="submit" name="add" value="@i">Add requirement</button>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+        <button class="btn btn-default" type="submit" name="add" value="area">Add area</button>
+
+    <hr /><h3>Interactions</h3>
+
+        <div class="editor-label">
+            @Html.Label("The following are specific interactions that will require special attention:")
+        </div>
+        <p style="font-style: italic">Sometimes there are interactions between subsystems or products that are special cases.  For example, when feature X is on, feature Y is disabled.  A description of these interactions and any requirements around them should be captured.  If you have no content for this section, remove it from the document.</p>
+        <div class="editor-field">
+            @Html.TextArea("interactions", "", 5, 60, null)
+            @Html.ValidationMessage("test")
+        </div>
+
+    <p>
+        <button class="btn btn-default" type="submit" name="submitType" value="update">Update</button>
+        <button class="btn btn-default" type="submit" name="submitType" value="create">Create</button>
+    </p>
+}

@@ -1,5 +1,5 @@
 ﻿@using BROWSit.Models;
-@model BROWSit.Models.RequirementCRUDModel
+@model BROWSit.Models.TestScriptCRUDModel
 
 <h2>Create</h2>
 
@@ -12,31 +12,32 @@
         <h4>@Model.message</h4>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.requirement.Title)
+            @Html.LabelFor(model => model.testScript.Title)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.requirement.Title)
+            @Html.EditorFor(model => model.testScript.Title)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.requirement.Rationale)
+            @Html.LabelFor(model => model.testScript.Author)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.requirement.Rationale)
+            @Html.EditorFor(model => model.testScript.Author)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.requirement.Author)
+            @Html.LabelFor(model => model.testScript.Path)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.requirement.Author)
+            @Html.EditorFor(model => model.testScript.Path)
         </div>
 
         <div class="editor-label">
-            @Html.Label("Select a target:")
+            @Html.LabelFor(model => model.testScript.Requirements)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.myTarget.ID, Model.TargetList)
+            @Html.DropDownListFor(model => model.myRequirement, 
+                new SelectList(Model.requirements, "ID", "Title"))
         </div>
 
         <p>

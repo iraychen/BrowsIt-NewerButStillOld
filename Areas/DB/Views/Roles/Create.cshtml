@@ -1,0 +1,45 @@
+﻿@using BROWSit.Models;
+@model BROWSit.Models.RoleCRUDModel
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend>Role</legend>
+
+        <h4>@Model.message</h4>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.role.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.role.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.role.Users)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.myUser, 
+                new SelectList(Model.users, "ID", "Username"))
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.role.Reports)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.myReport, 
+                new SelectList(Model.users, "ID", "Title"))
+        </div>
+
+        <p>
+            <button class="btn btn-default" type="submit" name="submitType" value="create">Create</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
